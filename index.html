@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Utility Functions</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        
+        background-color: #f4f4f9;
+        color: #333;
+    }
+    input, button {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+    button {
+        cursor: pointer;
+        background-color: #b85c5c;
+        color: white;
+    }
+    button:hover {
+        background-color: #4cae4c;
+    }
+    .results {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Check Palindrome</h2>
+<input type="text" id="palindromeInput" placeholder="Enter a string">
+<button onclick="checkPalindrome()">Check</button>
+<div class="results" id="palindromeResult"></div>
+
+<h2>Find Min and Max</h2>
+<input type="text" id="minMaxInput" placeholder="Enter numbers separated by commas">
+<button onclick="findMinMax()">Find Min and Max</button>
+<div class="results" id="minMaxResult"></div>
+
+<h2>Identify Missing Number</h2>
+<input type="text" id="missingInput" placeholder="Enter a sequence of numbers separated by commas">
+<button onclick="findMissingNumber()">Find Missing Number</button>
+<div class="results" id="missingNumberResult"></div>
+
+<script>
+function checkPalindrome() {
+    const input = document.getElementById('palindromeInput').value;
+    const len = input.length;
+    for (let i = 0; i < len / 2; i++) {
+        if (input[i] !== input[len - 1 - i]) {
+            document.getElementById('palindromeResult').textContent = 'Not a palindrome.';
+            return;
+        }
+    }
+    document.getElementById('palindromeResult').textContent = 'Is a palindrome!';
+}
+
+function findMinMax() {
+    const input = document.getElementById('minMaxInput').value;
+    const numbers = input.split(',').map(Number);
+    let min = numbers[0];
+    let max = numbers[0];
+
+    numbers.forEach(num => {
+        if (num < min) min = num;
+        if (num > max) max = num;
+    });
+
+    document.getElementById('minMaxResult').textContent = 'Min: ' + min + ', Max: ' + max;
+}
+
+function findMissingNumber() {
+    const input = document.getElementById('missingInput').value;
+    const numbers = input.split(',').map(Number).sort((a, b) => a - b);
+    let missingNumbers = [];
+    for (let i = 1; i < numbers.length; i++) {
+        if (numbers[i] - numbers[i - 1] > 1) {
+            let start = numbers[i - 1] + 1;
+            let end = numbers[i];
+            for (let j = start; j < end; j++) {
+                missingNumbers.push(j);
+            }
+        }
+    }
+    document.getElementById('missingNumberResult').textContent = 'Missing numbers: ' + missingNumbers.join(', ');
+}
+
+</script>
+</body>
+</html>
